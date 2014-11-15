@@ -67,6 +67,7 @@ void Quit() {
 	return;
 }
 
+//! Temporary function.
 void WaitForEnter() {
 	while (!_kbhit());
 	while (_kbhit()) getch();

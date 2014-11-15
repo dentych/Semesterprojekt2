@@ -11,5 +11,6 @@ Dette indebærer
 * En modtager-STK500 som aflæser X10 data sendt gennem senderen.
 
 Der skal laves følgende
-* [ ] Menu-system
-* [ ] Flere ting
+* [X] Menu-system
+* [ ] Routine-klasse
+* [ ] Seriel kommunikation
