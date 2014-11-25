@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.8"/>
-<title>Semesterprojekt2: MenuItem  Klasse-reference</title>
+<title>Semesterprojekt2: Kode til projektet</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -38,8 +38,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'SÃ¸g');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Hovedside</span></a></li>
-      <li><a href="pages.html"><span>Relaterede&#160;sider</span></a></li>
-      <li class="current"><a href="annotated.html"><span>Klasser</span></a></li>
+      <li class="current"><a href="pages.html"><span>Relaterede&#160;sider</span></a></li>
+      <li><a href="annotated.html"><span>Klasser</span></a></li>
       <li><a href="files.html"><span>Filer</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -59,13 +59,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'SÃ¸g');
       </li>
     </ul>
   </div>
-  <div id="navrow2" class="tabs2">
-    <ul class="tablist">
-      <li><a href="annotated.html"><span>Oversigt&#160;over&#160;sammensatte&#160;typer</span></a></li>
-      <li><a href="classes.html"><span>Indeks&#160;over&#160;sammensatte&#160;typer</span></a></li>
-      <li><a href="functions.html"><span>Felter&#160;i&#160;sammensatte&#160;typer</span></a></li>
-    </ul>
-  </div>
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -82,25 +75,41 @@ var searchBox = new SearchBox("searchBox", "search",false,'SÃ¸g');
 
 </div><!-- top -->
 <div class="header">
-  <div class="summary">
-<a href="#friends">Friends</a> &#124;
-<a href="class_menu_item-members.html">Liste over alle medlemmer</a>  </div>
   <div class="headertitle">
-<div class="title">MenuItem Klasse-reference</div>  </div>
+<div class="title">Kode til projektet </div>  </div>
 </div><!--header-->
 <div class="contents">
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
-Friends</h2></td></tr>
-<tr class="memitem:a834cec0fab7efabab3cd53540e4d466d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a834cec0fab7efabab3cd53540e4d466d"></a>
-class&#160;</td><td class="memItemRight" valign="bottom"><b>Menu</b></td></tr>
-<tr class="separator:a834cec0fab7efabab3cd53540e4d466d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<hr/>Dokumentationen for denne klasse blev genereret ud fra filerne:<ul>
-<li>C:/Users/Dennis/Documents/Github/Semesterprojekt2/PC/Menu/<a class="el" href="_menu_item_8h_source.html">MenuItem.h</a></li>
-<li>C:/Users/Dennis/Documents/Github/Semesterprojekt2/PC/Menu/MenuItem.cpp</li>
+<div class="textblock"><p><b>Bemærk: Tekst mellem &lt; og &gt; betyder "indsæt egen tekst her", og krokodille-næbbene skal IKKE med. Feks. kan du indsætte <code>menusystem</code> i stedet for <code>&lt;ny-branch-navn&gt;</code>.</b></p>
+<ol type="1">
+<li>Klon repo Semesterprojekt2 <code>git clone git@github.com:dentych/Semesterprojekt2.git</code></li>
+<li>Lav en ny branch <code>git checkout -b &lt;ny-branch-navn&gt;</code> Giv branchen et navn, der kort giver en idé om, hvad branchen indeholder kode til. (F.eks. seriel, ny-menu, nasa-rumskib-software).</li>
+<li>Skriv kode, det bedste du har lært.</li>
+<li>Test det kode du har lavet</li>
+<li>Commit ændringen Hvis du kun har ændret i eksisterende filer: <code>git commit -a</code> Hvis du har lavet nye filer: <code>git add &lt;ny-fil-sti&gt;</code> (f.eks. <code>git add STK500/NytProgram.cpp</code>) <code>git commit -a</code></li>
+<li>Enten fortsæt med at skrive mere kode efter commit'en (gå tilbage til pkt. 3) Eller hvis du er færdig - push.</li>
+<li>Push til remote repo: <code>git push origin &lt;branch-navn&gt;</code></li>
+</ol>
+<p>Hvis du får fejl, kontakt  .</p>
+<h2>Opsætte Visual Studio</h2>
+<ul>
+<li>Lav en ny mappe til dine Visual Studio projekter<ul>
+<li>(Jeg har lavet min i min GitHub mappe.)</li>
 </ul>
-</div><!-- contents -->
+</li>
+<li>Lav et nyt projekt i din nye mappe. Kald projektet "Semesterprojekt2".</li>
+<li>Når du er i projektet skal du højre-klikke på din solution "Semesterprojekt2" i højre side.</li>
+<li>Vælg Properties</li>
+<li>Vælg "VC++ Directories" i venstre side</li>
+<li>Tilføj din GitHub mappes sti til "Include Directories"<ul>
+<li>Min sti er f.eks. <code>C:\Users\Dennis\Documents\Github</code></li>
+</ul>
+</li>
+<li>Vælg "Add existing item" og tilføj De filer du vil bruge fra Semesterprojekt2 git repoet.</li>
+<li>Skrive kode!</li>
+</ul>
+<h2>Opsætte Atmel Studio</h2>
+<p>Kommer snart. </p>
+</div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Genereret Tir Nov 25 2014 20:34:17 for Semesterprojekt2 af &#160;<a href="http://www.doxygen.org/index.html">

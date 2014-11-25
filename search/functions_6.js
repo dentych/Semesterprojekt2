@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['routine',['Routine',['../class_routine.html#a0edf416fccf6e4ac52cf26072b4bb7c5',1,'Routine']]],
-  ['routinemanager',['RoutineManager',['../_menuer_8h.html#a2568ffd4f3c6b52c92a5dda99bbcba5a',1,'Menuer.h']]],
-  ['running',['running',['../class_menu.html#a3b94189d8edd9d39859bda53c0347a5b',1,'Menu']]]
+  ['settitle',['setTitle',['../class_menu.html#a02852c355f2cbcfc147f221fce8495c3',1,'Menu']]],
+  ['startroutine',['startRoutine',['../class_serial_protocol.html#ac2de25b3ce588f845bbf60e5d163a4ae',1,'SerialProtocol']]],
+  ['stoproutine',['stopRoutine',['../class_serial_protocol.html#ad36cbc63889e22bf58457105bf7d94e3',1,'SerialProtocol']]]
 ];
