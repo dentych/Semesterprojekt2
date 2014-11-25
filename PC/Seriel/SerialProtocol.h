@@ -5,8 +5,12 @@
 class SerialProtocol{
 
 public:
-	bool checkLockStatus();
-	void sendRoutine();
+	bool openConnection(int baudRate);
+	bool isUnlocked();
+	bool startRoutine(Routine & routine);
+	bool stopRoutine();
 private:
-	bool initSerial();
+	CSerial cs;
+	int sendChar(char data);
+	char readData();
 };
