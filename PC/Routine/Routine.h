@@ -7,10 +7,11 @@ using namespace std;
 class Routine {
 public:
 	Routine(string name);
-	int setDelay(int delay);
+	void setDelay(int delay);
 	void setID(char ID);
-	int getIDSize();
-	int getIDList();
+	char getIDSize() const;
+	char getIDData(int index) const;
+	char getDelay() const;
 private:
 	string name_;
 	vector<char> modtagerID;

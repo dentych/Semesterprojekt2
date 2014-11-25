@@ -11,22 +11,56 @@ bool SerialProtocol::openConnection(int baudRate) {
 
 
 bool SerialProtocol::startRoutine(Routine & routine) {
+	// Protocol(1), check if STK is unlocked.
 	if (!isUnlocked()){
 		return false;
 	}
+	char receive = '0';
+
+	// Start Protocol(2), start routine.
+	// Send 2 for "Starting serial transmission of Routine data.
 	sendChar('2');
-	if (!(cs.ReadData == '2'))
+	receive = readData();
+	if (receive != '2') {
+		sendChar('Q');
 		return false;
-	else
-		cs.SendData(routine.getIDSize());
-	if (!(cs.ReadData == routine.getIDSize()))
-		return false;
-
-	for (int i = 0; i < routine.getIDSize(); i++){
-		
 	}
-		
+	
+	// Send the Routine receiver array list size.
+	sendChar(routine.getIDSize());
+	receive = readData();
+	if (receive != routine.getIDSize()) {
+		sendChar('Q');
+		return false;
+	}
 
+	// Send the Routine's ID array list data one by one.
+	for (int i = 0; i < routine.getIDSize(); i++){
+		char idData = routine.getIDData(i);
+		sendChar(idData);
+		receive = readData();
+		if (receive != idData) {
+			sendChar('Q');
+			return false;
+		}
+	}
+
+	// Send the Routine delay
+	char delay = routine.getDelay();
+	sendChar(delay);
+	receive = readData();
+	if (receive != delay) {
+		sendChar('Q');
+		return false;
+	}
+
+	receive = readData();
+	if (receive == '0') {
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 
 bool SerialProtocol::isUnlocked() {
