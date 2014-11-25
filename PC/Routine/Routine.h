@@ -1,11 +1,10 @@
 #pragma once
-using namespace std;
 #include <string>
 #include <vector>
 
+using namespace std;
 
-class Routine
-{
+class Routine {
 public:
 	Routine(string name);
 	int setDelay(int delay);
