@@ -9,6 +9,22 @@ bool SerialProtocol::openConnection(int baudRate) {
 	return false;
 }
 
+bool SerialProtocol::isUnlocked() {
+	char sendData = '1';
+	cs.SendData(&sendData, 1);
+
+	while (!cs.ReadDataWaiting());
+
+	char receiveData;
+	cs.ReadData(&receiveData, 1);
+
+	if (receiveData == '0') {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
 
 bool SerialProtocol::startRoutine(Routine & routine) {
 	// Protocol(1), check if STK is unlocked.
@@ -25,7 +41,7 @@ bool SerialProtocol::startRoutine(Routine & routine) {
 		sendChar('Q');
 		return false;
 	}
-	
+
 	// Send the Routine receiver array list size.
 	sendChar(routine.getIDSize());
 	receive = readData();
@@ -63,20 +79,20 @@ bool SerialProtocol::startRoutine(Routine & routine) {
 	}
 }
 
-bool SerialProtocol::isUnlocked() {
-	char sendData = '1';
-	cs.SendData(&sendData, 1);
-
-	while (!cs.ReadDataWaiting());
-
-	char receiveData;
-	cs.ReadData(&receiveData, 1);
-
-	if (receiveData == '0') {
-		return true;
+bool SerialProtocol::stopRoutine() {
+	if (!isUnlocked()) {
+		return false;
 	}
 	else {
-		return false;
+		char receive;
+		sendChar('3');
+		receive = readData();
+		if (receive == '3') {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 }
 
