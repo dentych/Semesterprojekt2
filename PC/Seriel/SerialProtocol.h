@@ -21,7 +21,7 @@ public:
 	bool isUnlocked();
 
 	/*!
-	Start routine and send the Routine object's data to the STK
+	Start Routine and send the Routine object's data to the STK
 	over Serial communication (Protocol(2)).
 
 	@return True if routine was successfully started, false otherwise

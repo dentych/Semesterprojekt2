@@ -7,16 +7,20 @@
 
 typedef void(*fPtr)();
 
+// Global variable
+SerialProtocol sp;
+
 void RoutineManager();
 void EditRoutine();
 void Quit();
 void WaitForEnter();
+void TurnOnRoutine();
 
 void MainMenu() {
 	Menu menu;
 
 	menu.setTitle("Main menu")
-		.addMenuItem("1", "Turn system on", &MainMenu)
+		.addMenuItem("1", "Turn system on", &TurnOnRoutine)
 		.addMenuItem("2", "Turn system off", &MainMenu)
 		.addMenuItem("3", "Routine manager", &RoutineManager)
 		.addMenuItem("q", "Quit", &Quit)
@@ -31,7 +35,14 @@ void MainMenu() {
 		break;
 	case 2:
 		std::cout << "Turning system off!" << std::endl;
-		WaitForEnter();
+		if (sp.stopRoutine()) {
+			std::cout << "Routine successfully turned off!" << std::endl;
+			WaitForEnter();
+		}
+		else {
+			std::cout << "There was a problem stopping the routine." << std::endl;
+			WaitForEnter();
+		}
 		break;
 	}
 }
@@ -63,11 +74,14 @@ void EditRoutine() {
 	menu.getChoice();
 }
 
+void TurnOnRoutine() {
+
+}
+
 void Quit() {
 	return;
 }
 
-//! Temporary function.
 void WaitForEnter() {
 	while (!_kbhit());
 	while (_kbhit()) getch();
