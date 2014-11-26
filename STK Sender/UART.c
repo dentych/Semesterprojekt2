@@ -28,7 +28,7 @@ Parameters:
 	BaudRate: Wanted Baud Rate.
 	Databits: Wanted number of Data Bits.
 *************************************************************************/
-void initUART(unsigned long BaudRate, unsigned char DataBit)
+void InitUART(unsigned long BaudRate, unsigned char DataBit)
 {
 unsigned int TempUBRR;
 

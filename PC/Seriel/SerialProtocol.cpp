@@ -80,7 +80,7 @@ bool SerialProtocol::startRoutine(Routine & routine) {
 }
 
 bool SerialProtocol::stopRoutine() {
-	if (!isUnlocked()) {
+	if (!isUnlocked()) { 
 		return false;
 	}
 	else {

@@ -80,5 +80,4 @@ ISR(INT1_vect){
 		MCUCR &= ~(1<<ISC10);						// INT1 = falling til DE2
 		confirmingLights();
 	}
-	
 }
