@@ -8,7 +8,7 @@ class Routine {
 public:
 	Routine(string name);
 	void setDelay(int delay);
-	void setID(char ID);
+	void addID(char ID);
 	char getIDSize() const;
 	char getIDData(int index) const;
 	char getDelay() const;

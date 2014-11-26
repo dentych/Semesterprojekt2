@@ -8,7 +8,7 @@ Routine::Routine(string name) {
 void Routine::setDelay(int delay) {
 	delay_ = delay;
 }
-void Routine::setID(char ID) {
+void Routine::addID(char ID) {
 	modtagerID.push_back(ID);
 }
 
