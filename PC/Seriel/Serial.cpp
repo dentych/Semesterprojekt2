@@ -5,7 +5,7 @@
 
 CSerial::CSerial()
 {
-hghfghgfmemset( &m_OverlappedRead, 0, sizeof( OVERLAPPED ) );
+	memset( &m_OverlappedRead, 0, sizeof( OVERLAPPED ) );
  	memset( &m_OverlappedWrite, 0, sizeof( OVERLAPPED ) );
 	m_hIDComDev = NULL;
 	m_bOpened = false;
