@@ -7,12 +7,24 @@ Dette repo indeholder source-koden til hele vores system.
 
 For at skrive kode til projektet (og dette repo): [COLLABORATING](https://github.com/dentych/Semesterprojekt2/blob/master/COLLABORATING.md)
 
-Dette indeb�rer
-* PC der k�rer menu-system
-* STK500 controller der gemmer rutiner og s�rger for at k�re dem (ved at sende data vha. X10 protokollen p� et 18V elnet)
-* En modtager-STK500 som afl�ser X10 data sendt gennem senderen.
+Dette indebærer
+* PC der kører menu-system
+* STK500 controller der gemmer rutiner og sørger for at køre dem (ved at sende data vha. X10 protokollen på et 18V elnet)
+* En modtager-STK500 som aflæser X10 data sendt gennem senderen.
 
-Der skal laves f�lgende
+Der skal laves følgende
 * [X] Menu-system
-* [ ] Routine-klasse
-* [ ] Seriel kommunikation
+* [X] Menu - Start rutine
+* [X] Menu - Stop rutine
+* [ ] Menu - Oprette rutine
+* [ ] Menu - Ændre rutine
+* [X] Seriel kommunikation (protokol+implementering)
+* [X] Routine-klasse
+* [X] Sender - Modtage data fra PC serielt
+* [X] Sender - Oplåsning/låsning vha. interrupt
+* [X] Sender - 120 kHz signal (timer)
+* [ ] Sender - Køre rutiner (sende tænd/sluk til lys og vente)
+* [ ] Sender - X10 protokol (sende data til X10 modtagerne)
+* [ ] Modtager - Modtage data over X10 protokol
+* [ ] Modtager - Aflæse data ved zero cross (interrupt + aflæsning af 0/1 på databen)
+* [ ] Evt. andet
