@@ -1,4 +1,10 @@
+﻿#ifndef _LED_H
+#define _LED_H
+
+void initLEDport(unsigned char hvilkenPort); /* 
+=======
 ﻿void initLEDport(unsigned char hvilkenPort); /* 
+>>>>>>> master
 0 = PORTA
 1 = PORTB
 2 = PORTC
@@ -18,4 +24,7 @@ led_nr: slukker den valgte led
 */
 void toggleLED(unsigned char hvilkenPort, unsigned char led_nr);/*
 hvilkenPort: 0=A, 1=B ...
+<<<<<<< HEAD
 */
+
+#endif

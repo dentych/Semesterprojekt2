@@ -5,79 +5,79 @@
 *  Author: Bjørn Nørgaard
 */
 
-#include <avr/io.h>
-#include <avr/delay.h>
-#include "UART.h"
-#include "Led.h"
-#include "Switch.h"
-
-unsigned char ledPort = 1;
-unsigned char switchPort = 0;
-
-void confirmingLights(void);
-void showoff(void);
-
-unsigned char receivedFromPc;	// latest char received from PC
-unsigned char locked = '0';		// 0 = unlocked
+#include "Sender.h"
 
 int main(void) {
+	ledPort = 2;
+	switchPort = 0;
+	locked = '1';
+	
+	// initialisering af LED, Switch og UART
 	initLEDport(ledPort);
 	initSwitchPort(switchPort);
-	InitUART(9600,8);
+	initUART(9600,8);
 	
+	GICR  = ( (1<<INT0)  | (1<<INT1 ) );		// enable both interrupts
+	MCUCR = ( (1<<ISC00) | (1<<ISC01) );		// INT0 = rising til ZERO-CROSS
+	MCUCR |= (1<<ISC11);						// INT1 = falling til DE2
+	sei();										// enable global interrupts
+
 	while(1) {
-		receivedFromPc = ReadChar();
+		while(locked == '1'){
+			if (CharReady()) {
+				ReadChar();
+				SendChar('1');
+				confirmingLights();
+			}
+		}
 		
-		if(receivedFromPc == '1' && locked == '0') {
-			confirmingLights();
-			SendString("Ready fuckers!");
+		while(locked == '0'){
+			if(!CharReady()){
+				continue;
+			}
+			receivedFromPc = ReadChar();
 			
-			do{
-				receivedFromPc = ReadChar();
+			switch(receivedFromPc){
 				
-				switch(receivedFromPc){
-					
-					case '1':
-					if(locked == '0'){
-						SendChar('0');
-						confirmingLights();
-					}
-					break;
-					
-					case '2':
-					SendChar(receivedFromPc);
-					showoff();
-					break;
-					
-					case 'q':
-					SendChar(receivedFromPc);
-					confirmingLights();
-					confirmingLights();
-					break;
-					
-					default:
-					SendChar(receivedFromPc);
-					break;
-					
-				}
-			}while(receivedFromPc != 'q');
+				case '1':
+				SendChar(locked);
+				break;
+				
+				case '2':
+				SendChar(receivedFromPc);
+				startRoutine();
+				showoff();
+				break;
+				
+				case '3':
+				SendChar(receivedFromPc);
+				stopRoutine();
+				showoff();
+				break;
+				
+			}
 		}
 	}
 }
 
-void confirmingLights(void){
-	writeAllLEDs(ledPort, 0xff);
-	_delay_ms(200);
-	writeAllLEDs(ledPort, 0x00);
+ISR(INT0_vect){
+	DDRD = 0xFF;
+	TCCR1A = 0b01000000;
+	TCCR1B = 0b00001001;
+	OCR1A = 14;
 }
 
-void showoff(void){
-	for(int i = 0; i<8;i++){
-		toggleLED(ledPort,i);
+ISR(INT1_vect){
+	if(locked == '1'){
+		locked = '0';
+		MCUCR |= (1<<ISC11) | (1<<ISC10);			// INT1 = rising til DE2
+		confirmingLights();
 		_delay_ms(100);
+		confirmingLights();
 	}
-	for(int i = 7; i>=0;i--){
-		toggleLED(ledPort,i);
-		_delay_ms(100);
+	else if(locked == '0'){
+		locked = '1';
+		MCUCR &= ~(1<<ISC10);						// INT1 = falling til DE2
+		confirmingLights();
 	}
 }
