@@ -1,10 +1,7 @@
 ﻿#ifndef _LED_H
 #define _LED_H
 
-void initLEDport(unsigned char hvilkenPort); /* 
-=======
-﻿void initLEDport(unsigned char hvilkenPort); 
->>>>>>> master
+void initLEDport(unsigned char hvilkenPort); /*
 0 = PORTA
 1 = PORTB
 2 = PORTC
