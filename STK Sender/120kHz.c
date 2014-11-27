@@ -1,11 +1,4 @@
-﻿/*
-* _120kHz.c
-*
-* Created: 25-11-2014 18:25:32
-*  Author: Bjørn Nørgaard
-*/
-
-#define F_CPU 3686400
+﻿#define F_CPU 3686400
 #include <avr/io.h>
 #include <avr/delay.h>
 

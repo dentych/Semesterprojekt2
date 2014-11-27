@@ -1,11 +1,4 @@
-﻿/*
-* SemesterProjekt2.c
-*
-* Created: 21-11-2014 14:36:57
-*  Author: Bjørn Nørgaard
-*/
-
-#include "Sender.h"
+﻿#include "Sender.h"
 
 int main(void) {
 	lysStatus = 0;
