@@ -3,7 +3,7 @@
 
 void initLEDport(unsigned char hvilkenPort); /* 
 =======
-﻿void initLEDport(unsigned char hvilkenPort); /* 
+﻿void initLEDport(unsigned char hvilkenPort); 
 >>>>>>> master
 0 = PORTA
 1 = PORTB
