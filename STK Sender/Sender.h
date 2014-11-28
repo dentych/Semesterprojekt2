@@ -33,4 +33,6 @@ void confirmingLights(void);
 
 void showoff(void);
 
+void chtobin(char toBeConverted, char * bitwise) {
+
 #endif /* SENDER_H_ */

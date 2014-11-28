@@ -71,3 +71,10 @@ void runRoutine(void) {
 	
 	lysStatus = (lysStatus > 0 ? 0 : 1); // Skifter lysStatus mellem 0 og 1.
 }
+
+void chtobin(char toBeConverted, char * bitwise) {
+	int i;
+	for (i = 0; i < 8; i++) {
+		bitwise[7 - i] = !!(toBeConverted & (1<<i));
+	}
+}
