@@ -3,8 +3,8 @@
 
 class RoutineList {
 public:
-	void addRoutine(Routine & routine);
-	void removeRoutine(int index);
+	bool addRoutine(Routine & routine);
+	bool removeRoutine(int index);
 	Routine & getRoutine(int index);
 	bool saveRoutines();
 	bool loadRoutines();
