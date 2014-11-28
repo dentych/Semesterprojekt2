@@ -24,18 +24,19 @@ void startRoutine(void){
 			return;
 		}
 	}
-	
+
 	// Modtager delay
 	delay = ReadChar();
 	if(checkForQ(delay)){
 		return;
 	}
-	
+
 	// Sender "Vi er færdige nu, ikk'?"
 	SendChar('0');
 	
 	// BEGYNDER X10 VÆRK !!!
 	//runRoutine(); MIDLERTIDIG UD
+
 	unsigned char cmd[] = {1, 0, 1, 1};
 	sendKommando(1, cmd);
 }
