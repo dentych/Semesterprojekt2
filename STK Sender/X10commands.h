@@ -6,10 +6,12 @@
 
 void startBurst(void);
 
-void startKommando(	unsigned char* unitCode, unsigned char* command);
+void sendKommando(unsigned char unitCode, unsigned char * command);
 
 void X10turnOff(unsigned char);
 
 void X10turnOn(unsigned char);
+
+void binComplimentary(unsigned char * binary, unsigned char * cmd, unsigned char start);
 
 #endif /* X10COMMANDS_H_ */
