@@ -42,6 +42,19 @@ void stopRoutine(void){
 	// STOPPER X10 VÆRK !!!
 }
 
+void runRoutine(void) {
+	int i;
+	for (i = 0; i < ID_size; i++) {
+		if (lysStatus == '0') {
+			X10turnOn(ID_list[i]);
+		}
+		else
+			X10turnOff(ID_list[i]);
+	}
+	
+	lysStatus = (lysStatus > 0 ? 0 : 1); // Skifter lysStatus mellem 0 og 1.
+}
+
 void confirmingLights(void) {
 	writeAllLEDs(ledPort, 0xff);
 	_delay_ms(200);
@@ -57,19 +70,6 @@ void showoff(void){
 		toggleLED(ledPort,i);
 		_delay_ms(100);
 	}
-}
-
-void runRoutine(void) {
-	int i;
-	for (i = 0;i < ID_size;i++) {
-		if (lysStatus == 0) {
-			X10turnOn(ID_list[i]);
-		}
-		else
-			X10turnOff(ID_list[i]);
-	}
-	
-	lysStatus = (lysStatus > 0 ? 0 : 1); // Skifter lysStatus mellem 0 og 1.
 }
 
 void chtobin(char toBeConverted, char * bitwise) {
