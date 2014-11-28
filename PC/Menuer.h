@@ -35,7 +35,6 @@ void MainMenu() {
 		std::cout << "Turning system on!" << std::endl;
 		r.setDelay(1);
 		r.addID(1);
-		r.addID(2);
 		if (sp.startRoutine(r)) {
 			cout << "Routine successfully started!" << endl;
 		}

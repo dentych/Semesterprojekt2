@@ -97,7 +97,7 @@ bool SerialProtocol::stopRoutine() {
 }
 
 int SerialProtocol::sendChar(char data) {
-	// std::cout << "Sending -" << data << "-" << std::endl; // Debugging purposes
+	std::cout << "Sending -" << data << "-" << std::endl; // Debugging purposes
 	return cs.SendData(&data,1);
 }
 
@@ -111,6 +111,6 @@ char SerialProtocol::readData() {
 	char data = *lpBuffer;
 	delete lpBuffer;
 
-	// cout << "Reading -" << data << "-" << endl; // Debugging purposes
+	cout << "Reading -" << data << "-" << endl; // Debugging purposes
 	return data;
 }

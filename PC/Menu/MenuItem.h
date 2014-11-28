@@ -1,4 +1,3 @@
-// RANDOM TEXT
 #pragma once
 #include <string>
 #include <iostream>
