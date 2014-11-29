@@ -33,7 +33,7 @@ void MainMenu() {
 	switch (c) {
 	case 1:
 		std::cout << "Turning system on!" << std::endl;
-		r.setDelay(1);
+		r.setDelay(5);
 		r.addID(1);
 		if (sp.startRoutine(r)) {
 			cout << "Routine successfully started!" << endl;

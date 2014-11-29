@@ -30,7 +30,6 @@ int main(void) {
 				if (CharReady()) {
 					ReadChar();
 					SendChar('1');
-					confirmingLights();
 				}
 			}
 			
@@ -50,13 +49,11 @@ int main(void) {
 					SendChar(receivedFromPc);
 					runningRoutine = 1;
 					startRoutine();
-					showoff();
 					break;
 					
 					case '3':
 					SendChar(receivedFromPc);
 					stopRoutine();
-					showoff();
 					break;
 					
 				}
@@ -79,6 +76,7 @@ int main(void) {
 						
 						case '3':
 						SendChar('3');
+						runningRoutine = 0;
 						stopRoutine();
 						break;
 						
@@ -89,11 +87,14 @@ int main(void) {
 				}
 			}
 			else {
+				toggleLED(ledPort, 5);
 				if ((TIFR & (1<<TOV1)) != 0) {
 					delayStatus++;
 					if (delay == delayStatus) {
+						TIFR = (1<<TOV1); 
 						runRoutine();
-						TIFR = 1<<TOV1; 
+						delayStatus = 0;
+						showOff();
 					}
 				}
 			}
