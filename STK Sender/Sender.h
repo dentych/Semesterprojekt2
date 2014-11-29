@@ -25,6 +25,8 @@ unsigned char ID_size;
 unsigned char ID_list[16];
 unsigned char delay;
 
+void mainSender(void);
+
 int checkForQ(char checkThis);
 
 void startRoutine(void);

@@ -23,76 +23,7 @@ int main(void) {
 	
 	DDRD |= 0b00110010;		//PD5 til 120kHz output
 
-	while(1) {
-		while (runningRoutine == 0) {
-			toggleLED(ledPort, 2);
-			if (CharReady()) {
-				receivedFromPc = ReadChar();
-				
-				if (receivedFromPc == 'Q') {
-					continue;
-				}
-				
-				if (locked == '1') {
-					SendChar('L');
-				}
-				else {
-					switch(receivedFromPc) {
-						case '1':
-						SendChar(locked);
-						break;
-						
-						case '2':
-						SendChar(receivedFromPc);
-						startRoutine();
-						runningRoutine = 1;
-						break;
-						
-						case '3':
-						SendChar(receivedFromPc);
-						stopRoutine();
-						break;
-					}
-				}
-			}
-		}
-		
-		while (runningRoutine == 1) {
-			if (CharReady()) {
-				receivedFromPc = ReadChar();
-				if (locked == '1') {
-					SendChar(locked);
-				}
-				else {
-					switch (receivedFromPc) {
-						case '1':
-						SendChar(locked);
-						break;
-						
-						case '3':
-						SendChar(receivedFromPc);
-						runningRoutine = 0;
-						stopRoutine();
-						break;
-						
-						default:
-						SendChar('5');
-					}
-				}
-			}
-			else {
-				if ((TIFR & (1<<TOV1)) > 0) {
-					TIFR = (1<<TOV1);
-					toggleLED(ledPort, 5);
-					delayStatus++;
-					if (delay == delayStatus) {
-						runRoutine();
-						delayStatus = 0;
-					}
-				}
-			}
-		}
-	}
+	mainSender();
 }
 
 ISR(INT0_vect) {			//INT0 til Zero-Cross til interrupt
