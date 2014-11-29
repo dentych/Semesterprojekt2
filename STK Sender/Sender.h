@@ -9,7 +9,6 @@
 #include "Led.h"
 #include "Switch.h"
 #include "X10commands.h"
-#include "StartBurst.h"
 
 
 // LED og Switch porte erklæres
