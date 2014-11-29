@@ -35,10 +35,7 @@ void startRoutine(void){
 	SendChar('0');
 	
 	// BEGYNDER X10 VÆRK !!!
-	//runRoutine(); MIDLERTIDIG UD
-
-	unsigned char cmd[] = {1, 0, 1, 1};
-	sendKommando(1, cmd);
+	runRoutine();
 }
 
 void stopRoutine(void){
@@ -63,16 +60,26 @@ void showoff(void){
 }
 
 void runRoutine(void) {
-	int i;
+	unsigned char i;
 	for (i = 0;i < ID_size;i++) {
 		if (lysStatus == 0) {
-			X10turnOn(ID_list[i]);
+			unsigned char cmd = {0, 0, 1, 0};
+			sendKommando(ID_list[i], cmd);
 		}
-		else
-			X10turnOff(ID_list[i]);
+		else {
+			unsigned char cmd = {0, 0, 1, 1};
+			sendKommando(ID_list[i], cmd);
+		}
 	}
 	
 	lysStatus = (lysStatus > 0 ? 0 : 1); // Skifter lysStatus mellem 0 og 1.
+	
+	// Starter time1 til at lave overflow hvert sekund
+	TCNT1H = 0x1F; 
+	TCNT1L = 0;
+	// Timer 1 i Normal Mode og PS = 64
+	TCCR1A = 0b00000000;
+	TCCR1B = 0b00000011;
 }
 
 void chtobin(char toBeConverted, char * bitwise) {

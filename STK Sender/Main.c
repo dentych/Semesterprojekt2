@@ -15,6 +15,7 @@ int main(void) {
 	
 	// Routine running stuff
 	unsigned char runningRoutine = 0;
+	unsigned char delayStatus = 0;
 
 	GICR  = ( (1<<INT0)  | (1<<INT1 ) );		// enable both interrupts
 	MCUCR |= ( (1<<ISC00) | (1<<ISC01) );		// INT0 = rising til ZERO-CROSS
