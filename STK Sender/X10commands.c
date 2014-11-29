@@ -4,7 +4,7 @@ void startBurst(void){
 	TCCR1A = 0b01000000;
 	TCCR1B = 0b00001001;
 	OCR1A = 14;
-	_delay_ms(1);
+	_delay_us(700);
 	TCCR1A = 0x00;
 }
 
@@ -20,8 +20,10 @@ void sendKommando(unsigned char unitCode, unsigned char * command){
 	
 	unsigned char i;
 	for (i = 0; i < 20; i++) {
-		toggleLED(2, 4);
-		while (interrupt == '0') {}
+		while (interrupt == '0') 
+		{
+			_delay_us(1);
+		}
 		
 		if (cmd[i] == 0) {
 			interrupt = '0';
@@ -31,8 +33,6 @@ void sendKommando(unsigned char unitCode, unsigned char * command){
 			interrupt = '0';
 			startBurst();
 		}
-		_delay_ms(100);
-		toggleLED(2, 4);
 	}
 }
 

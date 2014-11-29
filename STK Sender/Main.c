@@ -5,7 +5,7 @@ int main(void) {
 	ledPort = 2;
 	switchPort = 0;
 	lysStatus = '0';
-	locked = '1';
+	locked = '0';
 	interrupt = '0';
 	
 	// initialisering af LED, Switch og UART

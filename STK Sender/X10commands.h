@@ -1,6 +1,8 @@
 ﻿#ifndef X10COMMANDS_H_
 #define X10COMMANDS_H_
 
+#include "Sender.h"
+
 #include <avr/interrupt.h>
 #include <util/delay.h>
 
