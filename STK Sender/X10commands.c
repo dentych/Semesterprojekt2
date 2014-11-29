@@ -34,6 +34,26 @@ void sendKommando(unsigned char unitCode, unsigned char * command){
 			startBurst();
 		}
 	}
+	for (i = 0; i < 6; i++) {
+		while (interrupt == '0') {
+			_delay_us(1);
+		}
+	}
+	for (i = 0; i < 20; i++) {
+		while (interrupt == '0') 
+		{
+			_delay_us(1);
+		}
+		
+		if (cmd[i] == 0) {
+			interrupt = '0';
+			_delay_ms(1);
+		}
+		else {
+			interrupt = '0';
+			startBurst();
+		}
+	}
 }
 
 void X10turnOff(unsigned char ID_element){
