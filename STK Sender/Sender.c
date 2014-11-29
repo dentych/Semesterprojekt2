@@ -39,7 +39,7 @@ void startRoutine(void){
 }
 
 void stopRoutine(void){
-	// STOPPER X10 VÆRK !!!
+	TCCR1B = 0;
 }
 
 void runRoutine(void) {
@@ -58,6 +58,7 @@ void runRoutine(void) {
 	lysStatus = (lysStatus > 0 ? 0 : 1); // Skifter lysStatus mellem 0 og 1.
 	
 	// Starter time1 til at lave overflow hvert sekund
+	TIFR = (1<<TOV1);
 	TCNT1H = 0x1F; 
 	TCNT1L = 0;
 	// Timer 1 i Normal Mode og PS = 64
