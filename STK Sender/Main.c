@@ -6,6 +6,7 @@ int main(void) {
 	switchPort = 0;
 	lysStatus = '0';
 	locked = '1';
+	interrupt = '0';
 	
 	// initialisering af LED, Switch og UART
 	initLEDport(ledPort);
@@ -58,11 +59,7 @@ int main(void) {
 }
 
 ISR(INT0_vect) {			//INT0 til Zero-Cross til interrupt
-	//TCCR1A = 0b01000000;
-	//TCCR1B = 0b00001001;
-	//OCR1A = 14;
-	//_delay_ms(1);
-	//TCCR1A = 0x00;
+	interrupt = '1';
 }
 
 ISR(INT1_vect){

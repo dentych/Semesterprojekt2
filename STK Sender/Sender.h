@@ -18,6 +18,7 @@ unsigned char switchPort;
 // globale konstanter
 unsigned char receivedFromPc;	// latest char received from PC
 unsigned char locked;		// 0 = unlocked
+unsigned char interrupt;
 
 // Routine data
 unsigned char lysStatus;

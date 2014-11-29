@@ -19,7 +19,7 @@ void sendKommando(unsigned char unitCode, unsigned char * command){
 	unsigned char i;
 	for (i = 0; i < 20; i++) {
 		toggleLED(2, 4);
-		while (GIFR & (1<<INTF0) == 0) {}
+		while (interrupt == '0') {}
 		
 		if (cmd[i] == 0) {
 			GIFR |= (1<<INTF0);
