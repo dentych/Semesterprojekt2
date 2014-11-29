@@ -4,7 +4,7 @@ void startBurst(void){
 	TCCR1A = 0b01000000;
 	TCCR1B = 0b00001001;
 	OCR1A = 14;
-	_delay_ms(100);
+	_delay_ms(1);
 	TCCR1A = 0x00;
 }
 
@@ -24,11 +24,11 @@ void sendKommando(unsigned char unitCode, unsigned char * command){
 		while (interrupt == '0') {}
 		
 		if (cmd[i] == 0) {
-			GIFR |= (1<<INTF0);
+			interrupt = '0';
 			_delay_ms(1);
 		}
 		else {
-			GIFR |= (1<<INTF0);
+			interrupt = '0';
 			startBurst();
 		}
 		_delay_ms(100);
