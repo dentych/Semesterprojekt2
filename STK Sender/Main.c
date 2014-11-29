@@ -12,6 +12,9 @@ int main(void) {
 	initLEDport(ledPort);
 	initSwitchPort(switchPort);
 	InitUART(9600,8);
+	
+	// Routine running stuff
+	unsigned char runningRoutine = 0;
 
 	GICR  = ( (1<<INT0)  | (1<<INT1 ) );		// enable both interrupts
 	MCUCR |= ( (1<<ISC00) | (1<<ISC01) );		// INT0 = rising til ZERO-CROSS
@@ -21,38 +24,77 @@ int main(void) {
 	DDRD |= 0b00110010;		//PD5 til 120kHz output
 
 	while(1) {
-		while(locked == '1') {
-			if (CharReady()) {
-				ReadChar();
-				SendChar('1');
-				confirmingLights();
+		while (!runningRoutine) {
+			while(locked == '1') {
+				if (CharReady()) {
+					ReadChar();
+					SendChar('1');
+					confirmingLights();
+				}
+			}
+			
+			while(locked == '0') {
+				if(!CharReady()){
+					continue;
+				}
+				receivedFromPc = ReadChar();
+				
+				switch(receivedFromPc) {
+					
+					case '1':
+					SendChar(locked);
+					break;
+					
+					case '2':
+					SendChar(receivedFromPc);
+					runningRoutine = 1;
+					startRoutine();
+					showoff();
+					break;
+					
+					case '3':
+					SendChar(receivedFromPc);
+					stopRoutine();
+					showoff();
+					break;
+					
+				}
 			}
 		}
 		
-		while(locked == '0') {
-			if(!CharReady()){
-				continue;
+		while (runningRoutine) {
+			if (CharReady()) {
+				if (locked == '1') {
+					ReadChar();
+					SendChar(locked);
+				}
+				else {
+					receivedFromPc = ReadChar();
+					
+					switch (receivedFromPc) {
+						case '1':
+						SendChar(locked);
+						break;
+						
+						case '3':
+						SendChar('3');
+						stopRoutine();
+						break;
+						
+						default:
+						SendChar(locked);
+						break;
+					}
+				}
 			}
-			receivedFromPc = ReadChar();
-			
-			switch(receivedFromPc) {
-				
-				case '1':
-				SendChar(locked);
-				break;
-				
-				case '2':
-				SendChar(receivedFromPc);
-				startRoutine();
-				showoff();
-				break;
-				
-				case '3':
-				SendChar(receivedFromPc);
-				stopRoutine();
-				showoff();
-				break;
-				
+			else {
+				if ((TIFR & (1<<TOV1)) != 0) {
+					delayStatus++;
+					if (delay == delayStatus) {
+						runRoutine();
+						TIFR = 1<<TOV1; 
+					}
+				}
 			}
 		}
 	}
