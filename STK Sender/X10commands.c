@@ -15,7 +15,9 @@ void sendKommando(unsigned char unitCode, unsigned char * command){
 	chtobin(unitCode, unitBin);
 	binComplimentary(unitBin, cmd, 4);
 	binComplimentary(command, cmd, 12);
-
+	
+	interrupt = '0';
+	
 	unsigned char i;
 	for (i = 0; i < 20; i++) {
 		toggleLED(2, 4);
