@@ -5,7 +5,7 @@ int main(void) {
 	ledPort = 2;
 	switchPort = 0;
 	lysStatus = '0';
-	locked = '0';
+	locked = '1';
 	interrupt = '0';
 	
 	// initialisering af LED, Switch og UART
@@ -66,13 +66,11 @@ ISR(INT1_vect){
 	if(locked == '1') {
 		locked = '0';
 		MCUCR |= (1<<ISC11) | (1<<ISC10);			// INT1 = rising til DE2
-		confirmingLights();
-		_delay_ms(100);
-		confirmingLights();
+		turnOnLED(ledPort, 0);
 	}
 	else if(locked == '0') {
 		locked = '1';
 		MCUCR &= ~(1<<ISC10);						// INT1 = falling til DE2
-		confirmingLights();
+		turnOffLED(ledPort, 0);
 	}
 }
