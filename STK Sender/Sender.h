@@ -25,6 +25,10 @@ unsigned char ID_size;
 unsigned char ID_list[16];
 unsigned char delay;
 
+// Routine running stuff
+unsigned char runningRoutine;
+unsigned char delayStatus;
+
 void mainSender(void);
 
 int checkForQ(char checkThis);

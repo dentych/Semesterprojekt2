@@ -6,15 +6,13 @@ int main(void) {
 	lysStatus = 0;
 	locked = '1';
 	interrupt = '0';
+	runningRoutine = 0;
+	delayStatus = 0;
 	
 	// initialisering af LED, Switch og UART
 	initLEDport(ledPort);
 	initSwitchPort(switchPort);
 	InitUART(9600,8);
-	
-	// Routine running stuff
-	unsigned char runningRoutine = 0;
-	unsigned char delayStatus = 0;
 
 	GICR  = ( (1<<INT0)  | (1<<INT1 ) );		// enable both interrupts
 	MCUCR |= ( (1<<ISC00) | (1<<ISC01) );		// INT0 = rising til ZERO-CROSS
@@ -26,7 +24,8 @@ int main(void) {
 	mainSender();
 }
 
-ISR(INT0_vect) {			//INT0 til Zero-Cross til interrupt
+//INT0 til Zero-Cross til interrupt
+ISR(INT0_vect) {			
 	interrupt = '1';
 }
 
