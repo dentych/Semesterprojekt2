@@ -10,7 +10,6 @@
 #include "Switch.h"
 #include "X10commands.h"
 
-
 // LED og Switch porte erklæres
 unsigned char ledPort;
 unsigned char switchPort;
@@ -31,10 +30,6 @@ int checkForQ(char checkThis);
 void startRoutine(void);
 
 void stopRoutine(void);
-
-void confirmingLights(void);
-
-void showoff(void);
 
 void chtobin(char toBeConverted, char * bitwise);
 
