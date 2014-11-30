@@ -7,8 +7,6 @@ unsigned char interrupt;
 unsigned char startNipple[4];
 unsigned char ledPort;
 
-void modtagerMain(void);
-
 void waitForStartNibble(void);
 
 #endif /* MODTAGER_H_ */
