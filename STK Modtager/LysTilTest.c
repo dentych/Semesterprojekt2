@@ -1,4 +1,4 @@
-﻿#include "Sender.h"
+﻿#include "Modtager.h"
 #include "LysTilTest.h"
 
 void confirmingLights(void) {

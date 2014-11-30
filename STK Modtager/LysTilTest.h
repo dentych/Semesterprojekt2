@@ -1,6 +1,10 @@
 ﻿#ifndef LYSTILTEST_H_
 #define LYSTILTEST_H_
 
+#include <util/delay.h>
+
+unsigned char ledPort;
+
 void confirmingLights(void);
 
 void showoff(void);
