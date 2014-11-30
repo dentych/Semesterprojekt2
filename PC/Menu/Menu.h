@@ -27,19 +27,19 @@ Class to manage menu item holding and drawing on screen.
 class Menu {
 public:
 	/*!
+	Constructor for menu. Sets the title displayed in the console.
+	
+	@param title	The title for the menu
+	*/
+	Menu(std::string title);
+
+	/*!
 	Destructor for Menu.
 	The destructor makes sure to call the next function to load the next menu.
 
 	All menu functions are defined in Menuer.h
 	*/
 	~Menu();
-
-	/*!
-	Used to set the top title of the menu. Displaying shizzle
-
-	@param	title	The title to be displayed
-	*/
-	Menu & setTitle(std::string title);
 
 	/*!
 	Adds a menu item to the menu.

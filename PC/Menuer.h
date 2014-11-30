@@ -9,18 +9,20 @@ typedef void(*fPtr)();
 
 // Global variable
 SerialProtocol sp;
+RoutineList routines;
 
+void MainMenu();
 void RoutineManager();
+void RemoveRoutine();
 void EditRoutine();
+void TurnOnRoutine();
 void Quit();
 void WaitForEnter();
-void TurnOnRoutine();
 
 void MainMenu() {
-	Menu menu;
+	Menu menu("Main menu");
 
-	menu.setTitle("Main menu")
-		.addMenuItem("1", "Turn system on", &TurnOnRoutine)
+	menu.addMenuItem("1", "Turn system on", &TurnOnRoutine)
 		.addMenuItem("2", "Turn system off", &MainMenu)
 		.addMenuItem("3", "Routine manager", &RoutineManager)
 		.addMenuItem("q", "Quit", &Quit)
@@ -44,33 +46,133 @@ void MainMenu() {
 }
 
 void RoutineManager() {
-	Menu menu;
+	Menu menu("Routine Manager");
 
-	menu.setTitle("Routine Manager")
-		.addMenuItem("1", "Add routine", &RoutineManager)
-		.addMenuItem("2", "Remove routine", &RoutineManager)
+	menu.addMenuItem("1", "Add routine", &RoutineManager)
+		.addMenuItem("2", "Remove routine", &RemoveRoutine)
 		.addMenuItem("3", "Edit routine", &EditRoutine)
 		.addMenuItem("q", "Back to main menu", &MainMenu)
 		.drawMenu();
 
-	menu.getChoice();
+	int choice = menu.getChoice();
+
+	switch (choice) {
+	case 1:
+		cout << "Adding routine..." << endl;
+		cout << "Name of new routine: ";
+		fflush(stdin);
+		string name;
+		getline(cin, name);
+		if (name.length() > 0) {
+			Routine r;
+			r.setName(name);
+			r.setDelay(0);
+			cout << endl << "Adding routine to list..." << endl;
+			if (routines.addRoutine(r)) {
+				cout << "Routine was successfully added!" << endl;
+			}
+			else {
+				cout << "ERROR: The routine could not be added." << endl <<
+					"This can be caused by a full routine list. " <<
+					"Please try again." << endl;
+			}
+		}
+		else {
+			cout << "ERROR: Can't add routines with empty name." << endl;
+		}
+		WaitForEnter();
+		break;
+	}
+}
+
+void RemoveRoutine() {
+	Menu menu("Choose a routine to remove");
+
+	if (routines.getListSize() == 0) {
+		menu.addMenuItem("0", "Routine list is empty", &RoutineManager);
+	}
+	else {
+		for (int i = 0; i < routines.getListSize(); i++) {
+			menu.addMenuItem(to_string(i + 1), routines.getRoutinePtr(i)->getName(), &RoutineManager);
+		}
+	}
+	menu.addMenuItem("q", "Back to Routine Manager", &RoutineManager)
+		.drawMenu();
+
+	int choice = menu.getChoice();
+
+	if (choice <= routines.getListSize() && choice > 0) {
+		cout << "Removing routine..." << endl;
+		if (routines.removeRoutine(choice-1)) {
+			cout << "Routine successfully removed!" << endl;
+		}
+		else {
+			cout << "ERROR:" << endl <<
+				"Routine could not be deleted. Please try again" << endl;
+		}
+		WaitForEnter();
+	}
+	else {
+		if (!(choice == routines.getListSize()+1)) {
+			cout << "Routine not on the list!" << endl;
+			WaitForEnter();
+		}
+	}
 }
 
 void EditRoutine() {
-	Menu menu;
+	Menu menu("Choose routine to edit");
+	int listSize = routines.getListSize();
 
-	menu.setTitle("Choose routine to edit")
-		.addMenuItem("1", "Routine 1", &EditRoutine)
-		.addMenuItem("2", "Routine 2", &EditRoutine)
-		.addMenuItem("3", "Routine 3", &EditRoutine)
-		.addMenuItem("4", "Routine 4", &EditRoutine)
-		.addMenuItem("q", "Back to Routine Manager", &RoutineManager)
+	if (listSize == 0) {
+		menu.addMenuItem("0", "Routine list is empty", &RoutineManager);
+	}
+	else {
+		for (int i = 0; i < listSize; i++) {
+			menu.addMenuItem(to_string(i + 1), routines.getRoutinePtr(i)->getName(), &EditRoutine);
+		}
+	}
+	menu.addMenuItem("q", "Back to Routine Manager", &RoutineManager)
 		.drawMenu();
 
 	menu.getChoice();
 }
 
 void TurnOnRoutine() {
+	int listSize = routines.getListSize();
+	Menu menu("Turn on routine");
+
+	if (listSize == 0) {
+		menu.addMenuItem("0", "There are no routines on the list", &MainMenu);
+	}
+	else {
+		for (int i = 0; i < listSize; i++) {
+			menu.addMenuItem(to_string(i + 1), routines.getRoutinePtr(i)->getName(), &MainMenu);
+		}
+	}
+	menu.addMenuItem("q", "Back to main menu", &Quit)
+		.drawMenu();
+
+	int choice = menu.getChoice();
+
+	if (choice > 0 && choice <= listSize) {
+		cout << "Starting routine..." << endl;
+		if (sp.startRoutine(*routines.getRoutinePtr(choice))) {
+			cout << "Routine was successfully started!" << endl;
+			WaitForEnter();
+		}
+		else {
+			cout << "ERROR: Could not start routine. " <<
+				"Is the system unlocked?" << endl;
+			WaitForEnter();
+		}
+	}
+	else {
+		if (!(choice == listSize + 1)) {
+			cout << "ERROR: Routine not on the list. Try again." << endl;
+			WaitForEnter();
+		}
+	}
 }
 
 void Quit() {
@@ -78,6 +180,8 @@ void Quit() {
 }
 
 void WaitForEnter() {
+	cout << endl << "Press Enter to continue..." << endl;
+
 	while (!_kbhit());
 	while (_kbhit()) getch();
 	fflush(stdin);

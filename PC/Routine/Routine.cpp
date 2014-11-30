@@ -1,25 +1,29 @@
 #include "Routine.h"
 #include <iostream>
 
-Routine::Routine(string name) {
+void Routine::setName(string name) {
 	name_ = name;
 }
 
 void Routine::setDelay(int delay) {
 	delay_ = delay;
 }
-void Routine::addID(char ID) {
+void Routine::addID(int ID) {
 	modtagerID.push_back(ID);
 }
 
-char Routine::getIDSize() const {
+string Routine::getName() const {
+	return name_;
+}
+
+int Routine::getIDSize() const {
 	return modtagerID.size();
 }
 
-char Routine::getIDData(int index) const {
+int Routine::getIDData(int index) const {
 	return modtagerID.at(index);
 }
 
-char Routine::getDelay() const {
+int Routine::getDelay() const {
 	return delay_;
 }

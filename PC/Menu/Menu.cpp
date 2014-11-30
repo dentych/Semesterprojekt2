@@ -2,16 +2,14 @@
 
 bool Menu::run = true;
 
+Menu::Menu(std::string title) {
+	this->title = title;
+}
+
 Menu::~Menu() {
 	if (choice > 0) {
 		menuList.at(choice - 1).getNextMenu()();
 	}
-}
-
-Menu & Menu::setTitle(std::string title) {
-	this->title = title;
-
-	return *this;
 }
 
 Menu & Menu::addMenuItem(std::string id, std::string text, fPtr nextMenu) {
