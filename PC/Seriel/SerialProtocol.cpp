@@ -10,13 +10,12 @@ bool SerialProtocol::openConnection(int baudRate) {
 }
 
 bool SerialProtocol::isUnlocked() {
-	char sendData = '1';
-	cs.SendData(&sendData, 1);
+	sendChar('1');
 
 	while (!cs.ReadDataWaiting());
 
 	char receiveData;
-	cs.ReadData(&receiveData, 1);
+	receiveData = readData();
 
 	if (receiveData == '0') {
 		return true;
