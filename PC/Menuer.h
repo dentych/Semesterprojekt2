@@ -28,21 +28,7 @@ void MainMenu() {
 
 	int c = menu.getChoice();
 
-	Routine r("Cake");
-
 	switch (c) {
-	case 1:
-		std::cout << "Turning system on!" << std::endl;
-		r.setDelay(1);
-		r.addID(1);
-		if (sp.startRoutine(r)) {
-			cout << "Routine successfully started!" << endl;
-		}
-		else {
-			cout << "Failed to start routine :(" << endl;
-		}
-		WaitForEnter();
-		break;
 	case 2:
 		std::cout << "Turning system off!" << std::endl;
 		if (sp.stopRoutine()) {
@@ -85,7 +71,6 @@ void EditRoutine() {
 }
 
 void TurnOnRoutine() {
-
 }
 
 void Quit() {

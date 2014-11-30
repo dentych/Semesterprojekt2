@@ -9,8 +9,6 @@
 #include "Led.h"
 #include "Switch.h"
 #include "X10commands.h"
-#include "StartBurst.h"
-
 
 // LED og Switch porte erklæres
 unsigned char ledPort;
@@ -19,6 +17,7 @@ unsigned char switchPort;
 // globale konstanter
 unsigned char receivedFromPc;	// latest char received from PC
 unsigned char locked;		// 0 = unlocked
+unsigned char interrupt;
 
 // Routine data
 unsigned char lysStatus;
@@ -31,10 +30,6 @@ int checkForQ(char checkThis);
 void startRoutine(void);
 
 void stopRoutine(void);
-
-void confirmingLights(void);
-
-void showoff(void);
 
 void chtobin(char toBeConverted, char * bitwise);
 

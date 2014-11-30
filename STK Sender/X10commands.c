@@ -4,7 +4,7 @@ void startBurst(void){
 	TCCR1A = 0b01000000;
 	TCCR1B = 0b00001001;
 	OCR1A = 14;
-	_delay_ms(100);
+	_delay_ms(1);
 	TCCR1A = 0x00;
 }
 
@@ -15,22 +15,45 @@ void sendKommando(unsigned char unitCode, unsigned char * command){
 	chtobin(unitCode, unitBin);
 	binComplimentary(unitBin, cmd, 4);
 	binComplimentary(command, cmd, 12);
-
+	
+	interrupt = '0';
+	
 	unsigned char i;
 	for (i = 0; i < 20; i++) {
-		toggleLED(2, 4);
-		while (GIFR & (1<<INTF0) == 0) {}
+		while (interrupt == '0') 
+		{
+			_delay_us(1);
+		}
 		
 		if (cmd[i] == 0) {
-			GIFR |= (1<<INTF0);
+			interrupt = '0';
 			_delay_ms(1);
 		}
 		else {
-			GIFR |= (1<<INTF0);
+			interrupt = '0';
 			startBurst();
 		}
-		_delay_ms(100);
-		toggleLED(2, 4);
+	}
+	for (i = 0; i < 6; i++) {
+		while (interrupt == '0') {
+			_delay_us(1);
+		}
+		interrupt = '0';
+	}
+	for (i = 0; i < 20; i++) {
+		while (interrupt == '0') 
+		{
+			_delay_us(1);
+		}
+		
+		if (cmd[i] == 0) {
+			interrupt = '0';
+			_delay_ms(1);
+		}
+		else {
+			interrupt = '0';
+			startBurst();
+		}
 	}
 }
 
