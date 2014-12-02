@@ -50,7 +50,7 @@ void RoutineManager() {
 
 	menu.addMenuItem("1", "Add routine", &RoutineManager)
 		.addMenuItem("2", "Remove routine", &RemoveRoutine)
-		.addMenuItem("3", "Edit routine", &RoutineManager)
+		.addMenuItem("3", "Edit routine", &EditRoutine)
 		.addMenuItem("q", "Back to main menu", &MainMenu)
 		.drawMenu();
 
