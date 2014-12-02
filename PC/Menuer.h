@@ -16,7 +16,7 @@ void RoutineManager();
 void RemoveRoutine();
 void EditRoutine();
 void TurnOnRoutine();
-void Quit();
+void EmptyMenu();
 void WaitForEnter();
 
 void MainMenu() {
@@ -25,7 +25,7 @@ void MainMenu() {
 	menu.addMenuItem("1", "Turn system on", &TurnOnRoutine)
 		.addMenuItem("2", "Turn system off", &MainMenu)
 		.addMenuItem("3", "Routine manager", &RoutineManager)
-		.addMenuItem("q", "Quit", &Quit)
+		.addMenuItem("q", "Quit", &EmptyMenu)
 		.drawMenu();
 
 	int c = menu.getChoice();
@@ -140,11 +140,10 @@ void EditRoutine() {
 	if (choice > 0 && choice <= listSize) {
 		bool finishedEditing = false;
 		Menu submenu("Editing routine: " + routines.getRoutinePtr(choice - 1)->getName());
-		submenu.addMenuItem("1", "Edit name", &RoutineManager)
-			.addMenuItem("2", "Add receiver ID", &RoutineManager)
-			.addMenuItem("3", "Edit delay", &RoutineManager)
-			.addMenuItem("4", "Save routine", &RoutineManager)
-			.addMenuItem("q", "Cancel", &RoutineManager);
+		submenu.addMenuItem("1", "Edit name", &EmptyMenu)
+			.addMenuItem("2", "Add receiver ID", &EmptyMenu)
+			.addMenuItem("3", "Edit delay", &EmptyMenu)
+			.addMenuItem("4", "Finish", &EmptyMenu);
 		while (!finishedEditing) {
 			submenu.drawMenu();
 
@@ -180,17 +179,28 @@ void EditRoutine() {
 						cout << "Receiver ID added to routine..." << endl;
 					}
 					else {
-						cout << "ID has to be 0 and above, and below 15" << endl;
+						cout << "ERROR: ID has to be between 0 and 16 (0 included)" << endl;
+					}
+					WaitForEnter();
+					break;
+				}
+				case 3:
+				{
+					cout << "New delay time: ";
+					fflush(stdin);
+					int newDelay;
+					cin >> newDelay;
+					if (newDelay > 0 && newDelay < 256) {
+						routines.getRoutinePtr(choice - 1)->setDelay(newDelay);
+						cout << "Routine delay changed..." << endl;
+					}
+					else {
+						cout << "ERROR: Delay has to be between 0 and 256" << endl;
 					}
 					WaitForEnter();
 					break;
 				}
 				case 4:
-					finishedEditing = true;
-					cout << "Routine saved..." << endl;
-					WaitForEnter();
-					break;
-				case 5:
 					finishedEditing = true;
 					break;
 				}
@@ -211,7 +221,7 @@ void TurnOnRoutine() {
 			menu.addMenuItem(to_string(i + 1), routines.getRoutinePtr(i)->getName(), &MainMenu);
 		}
 	}
-	menu.addMenuItem("q", "Back to main menu", &Quit)
+	menu.addMenuItem("q", "Back to main menu", &EmptyMenu)
 		.drawMenu();
 
 	int choice = menu.getChoice();
@@ -236,7 +246,7 @@ void TurnOnRoutine() {
 	}
 }
 
-void Quit() {
+void EmptyMenu() {
 	return;
 }
 

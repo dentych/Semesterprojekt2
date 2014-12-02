@@ -42,7 +42,12 @@ bool RoutineList::saveRoutines() {
 	if (file.is_open() && getListSize() > 0) {
 		for (int i = 0; i < list.size(); i++) {
 			// Name of routine
-			file << list.at(i).getName() << " ";
+			string name = list.at(i).getName();
+			for (int i = 0; i < name.length(); i++) {
+				if (name[i] == ' ')
+					name[i] = '_';
+			}
+			file << name << " ";
 			//std::cout << "Name: " << list.at(i).getName() << endl; // Debugging
 
 			// Amount of IDs in routine
@@ -76,6 +81,11 @@ bool RoutineList::loadRoutines() {
 			int IDsize;
 			file >> name >> IDsize;
 			if (name.length() > 0) {
+				for (int i = 0; i < name.length(); i++) {
+					if (name[i] == '_') {
+						name[i] = ' ';
+					}
+				}
 				Routine r;
 				r.setName(name);
 				for (int i = 0; i < IDsize; i++) {
