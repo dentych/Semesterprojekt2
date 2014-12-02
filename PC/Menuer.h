@@ -50,7 +50,7 @@ void RoutineManager() {
 
 	menu.addMenuItem("1", "Add routine", &RoutineManager)
 		.addMenuItem("2", "Remove routine", &RemoveRoutine)
-		.addMenuItem("3", "Edit routine", &EditRoutine)
+		.addMenuItem("3", "Edit routine", &RoutineManager)
 		.addMenuItem("q", "Back to main menu", &MainMenu)
 		.drawMenu();
 
@@ -103,7 +103,7 @@ void RemoveRoutine() {
 
 	if (choice <= routines.getListSize() && choice > 0) {
 		cout << "Removing routine..." << endl;
-		if (routines.removeRoutine(choice-1)) {
+		if (routines.removeRoutine(choice - 1)) {
 			cout << "Routine successfully removed!" << endl;
 		}
 		else {
@@ -113,7 +113,7 @@ void RemoveRoutine() {
 		WaitForEnter();
 	}
 	else {
-		if (!(choice == routines.getListSize()+1)) {
+		if (!(choice == routines.getListSize() + 1)) {
 			cout << "Routine not on the list!" << endl;
 			WaitForEnter();
 		}
@@ -135,7 +135,68 @@ void EditRoutine() {
 	menu.addMenuItem("q", "Back to Routine Manager", &RoutineManager)
 		.drawMenu();
 
-	menu.getChoice();
+	int choice = menu.getChoice();
+
+	if (choice > 0 && choice <= listSize) {
+		bool finishedEditing = false;
+		Menu submenu("Editing routine: " + routines.getRoutinePtr(choice - 1)->getName());
+		submenu.addMenuItem("1", "Edit name", &RoutineManager)
+			.addMenuItem("2", "Add receiver ID", &RoutineManager)
+			.addMenuItem("3", "Edit delay", &RoutineManager)
+			.addMenuItem("4", "Save routine", &RoutineManager)
+			.addMenuItem("q", "Cancel", &RoutineManager);
+		while (!finishedEditing) {
+			submenu.drawMenu();
+
+			int subchoice = submenu.getChoice();
+
+			if (subchoice >= 0 && subchoice <= 4) {
+				string name;
+				switch (subchoice) {
+				case 1:
+				{
+					cout << "New name: ";
+					fflush(stdin);
+					string name;
+					getline(cin, name);
+					if (name.length() > 0) {
+						routines.getRoutinePtr(choice - 1)->setName(name);
+						cout << endl << "Routine name changed..." << endl;
+					}
+					else {
+						cout << "Name can't be empty..." << endl;
+					}
+					WaitForEnter();
+					break;
+				}
+				case 2:
+				{
+					cout << "Add new receiver ID: ";
+					fflush(stdin);
+					int ID;
+					cin >> ID;
+					if (ID >= 0 && ID < 16) {
+						routines.getRoutinePtr(choice - 1)->addID(ID);
+						cout << "Receiver ID added to routine..." << endl;
+					}
+					else {
+						cout << "ID has to be 0 and above, and below 15" << endl;
+					}
+					WaitForEnter();
+					break;
+				}
+				case 4:
+					finishedEditing = true;
+					cout << "Routine saved..." << endl;
+					WaitForEnter();
+					break;
+				case 5:
+					finishedEditing = true;
+					break;
+				}
+			}
+		}
+	}
 }
 
 void TurnOnRoutine() {
