@@ -3,6 +3,7 @@
 bool Menu::run = true;
 
 Menu::Menu(std::string title) {
+	choice = 0;
 	this->title = title;
 }
 

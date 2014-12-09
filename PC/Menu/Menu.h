@@ -81,14 +81,13 @@ public:
 private:
 	// Methods
 	void setCursor(int posX, int posY);
-	void setChoice(int choice);
 	std::string getTitle() const;
 
 	// Variables
 	std::string title;
 	std::vector<std::string> data;
 	std::vector<MenuItem> menuList;
-	int choice = 0;
+	int choice;
 
 	static bool run;
 };
