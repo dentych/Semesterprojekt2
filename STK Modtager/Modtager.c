@@ -1,58 +1,72 @@
-﻿#include "Switch.h"
-#include <avr/io.h>
-#define MAX_SWITCH_NR 7
+﻿#include "Modtager.h"
 
-void initSwitchPort(unsigned char hvilkenPort){
-	if(hvilkenPort == 0){
-		DDRA = 0x00;
+void receiveBitSequence(unsigned char * outputReceivedBits) {
+	// ** Globale variabler til funktionen ** //
+	// Mængde af bits indlæst. Bruges til at vælge næste plads i outputReceivedBits der skal læses ind på.
+	unsigned char readBits = 0;
+	// Variabel til at holde den sidst læste bit.
+	unsigned char lastBit;
+	// Styrer while loopet, som kører, så længe der ikke er indlæst en hel X10 streng på 20 bit.
+	unsigned char correctlyRead = 0;
+	// ** ** ** ** ** ** ** ** ** ** ** ** ** //
+	
+	while (correctlyRead == 0) {
+		// Wait until interrupt to read data
+		unsigned char i;
+		// For loopet til aflæsning af startbit sekvensen (1110).
+		for (i = 0; i < 4; i++) {
+			waitForInterrupt();
+			lastBit = readBit();
+			if (i < 3 && lastBit == 0) {
+				// Starter forfra hvis en af de første tre bit i startsekvensen er 0
+				i = -1;
+			}
+			else if (i == 3 && lastBit == 1) {
+				// Starter forfra hvis en af de første tre bit i startsekvensen er 1
+				i = -1;
+			}
+		}
+		
+		toggleLED(ledPort, 7);
+		
+		for (i = 0; i < 16; i++) {
+			waitForInterrupt();
+			lastBit = readBit();
+			outputReceivedBits[i] = lastBit;
+		}
+		
+		//for (i = 0; i < 8; i++) {
+			//if (outputReceivedBits[i*2] == 0 && outputReceivedBits[i*2+1] == 1) {
+				//toggleLED(ledPort, i);
+			//}
+			//else if (outputReceivedBits[i*2] == 1 && outputReceivedBits[i*2+1] == 0) {
+				//toggleLED(ledPort, i);
+			//}
+			//_delay_ms(200);
+		//}
+		
+		correctlyRead = 1;
 	}
-	else if(hvilkenPort == 1){
-		DDRB = 0x00;
-	}
-	else if(hvilkenPort == 2){
-		DDRC = 0x00;
-	}
-	else if(hvilkenPort == 3){
-		DDRD = 0x00;
-	}
+	
+	toggleLED(ledPort, 0);
+	toggleLED(ledPort, 1);
+	toggleLED(ledPort, 2);
 }
-unsigned char switchStatus(unsigned char hvilkenPort){
-	if(hvilkenPort == 0){
-		return ~PINA;
+
+void waitForInterrupt() {
+	while (interrupt == 0)
+	{
+		_delay_us(1);
 	}
-	else if(hvilkenPort == 1){
-		return ~PINB;
-	}
-	else if(hvilkenPort == 2){
-		return ~PINC;
-	}
-	else if(hvilkenPort == 3){
-		return ~PIND;
-	}
+	
+	interrupt = 0;
 }
-unsigned char switchOn(unsigned char hvilkenPort, unsigned char switch_nr){
-	if(hvilkenPort == 0){
-		if(switch_nr <= MAX_SWITCH_NR){
-			unsigned char mask = ~(PINA | ~(1<<switch_nr));
-			return mask;
-		}
+
+unsigned char readBit() {
+	if (PIND & (1<<6)) {
+		return 1;
 	}
-	else if(hvilkenPort == 1){
-		if(switch_nr <= MAX_SWITCH_NR){
-			unsigned char mask = ~(PINB | ~(1<<switch_nr));
-			return mask;
-		}
-	}
-	else if(hvilkenPort == 2){
-		if(switch_nr <= MAX_SWITCH_NR){
-			unsigned char mask = ~(PINC | ~(1<<switch_nr));
-			return mask;
-		}
-	}
-	else if(hvilkenPort == 3){
-		if(switch_nr <= MAX_SWITCH_NR){
-			unsigned char mask = ~(PIND | ~(1<<switch_nr));
-			return mask;
-		}
+	else {
+		return 0;
 	}
 }

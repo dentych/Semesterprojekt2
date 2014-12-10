@@ -4,7 +4,7 @@ int main(void) {
 	ledPort = 2;
 	switchPort = 0;
 	lysStatus = 0;
-	locked = '1';
+	locked = '0';
 	interrupt = '0';
 	
 	// initialisering af LED, Switch og UART
@@ -25,7 +25,6 @@ int main(void) {
 
 	while(1) {
 		while (runningRoutine == 0) {
-			toggleLED(ledPort, 2);
 			if (CharReady()) {
 				receivedFromPc = ReadChar();
 				

@@ -1,5 +1,4 @@
-﻿#include "Sender.h"
-#include "LysTilTest.h"
+﻿#include "LysTilTest.h"
 
 void confirmingLights(void) {
 	writeAllLEDs(ledPort, 0xff);

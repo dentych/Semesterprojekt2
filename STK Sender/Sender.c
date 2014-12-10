@@ -35,6 +35,7 @@ void startRoutine(void){
 	SendChar('0');
 	
 	// BEGYNDER X10 VÆRK !!!
+	toggleLED(ledPort, 1);
 	runRoutine();
 }
 
@@ -66,7 +67,7 @@ void runRoutine(void) {
 	TCCR1B = 0b00000011;
 }
 
-void chtobin(char toBeConverted, char * bitwise) {
+void chtobin(unsigned char toBeConverted, unsigned char * bitwise) {
 	int i;
 	unsigned char allbits[8];
 	for (i = 0; i < 8; i++) {
