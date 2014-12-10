@@ -9,6 +9,7 @@ void startBurst(void){
 }
 
 void sendKommando(unsigned char unitCode, unsigned char * command){
+	toggleLED(ledPort, 7);
 	unsigned char cmd[20] = { 1, 1, 1, 0 };
 
 	unsigned char unitBin[4];
@@ -55,6 +56,8 @@ void sendKommando(unsigned char unitCode, unsigned char * command){
 			startBurst();
 		}
 	}
+	
+	toggleLED(ledPort, 7);
 }
 
 void X10turnOff(unsigned char ID_element){

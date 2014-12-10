@@ -31,6 +31,6 @@ void startRoutine(void);
 
 void stopRoutine(void);
 
-void chtobin(char toBeConverted, char * bitwise);
+void chtobin(unsigned char toBeConverted, unsigned char * bitwise);
 
 #endif /* SENDER_H_ */
