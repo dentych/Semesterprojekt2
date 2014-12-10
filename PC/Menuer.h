@@ -228,7 +228,7 @@ void TurnOnRoutine() {
 
 	if (choice > 0 && choice <= listSize) {
 		cout << "Starting routine..." << endl;
-		if (sp.startRoutine(*routines.getRoutinePtr(choice))) {
+		if (sp.startRoutine(*routines.getRoutinePtr(choice-1))) {
 			cout << "Routine was successfully started!" << endl;
 			WaitForEnter();
 		}

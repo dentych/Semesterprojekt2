@@ -39,7 +39,7 @@ Routine * RoutineList::getRoutinePtr(int index) {
 
 bool RoutineList::saveRoutines() {
 	ofstream file("routines.txt");
-	if (file.is_open() && getListSize() > 0) {
+	if (file.is_open()) {
 		for (int i = 0; i < list.size(); i++) {
 			// Name of routine
 			string name = list.at(i).getName();
@@ -65,10 +65,11 @@ bool RoutineList::saveRoutines() {
 			file << list.at(i).getDelay() << endl;
 			//cout << "Delay: " << list.at(i).getDelay() << endl; // Debugging
 		}
+
 		cout << "Routines saved on harddisk!" << endl;
 		return true;
 	}
-	cout << "ERROR: Routines couldn't be saved to harddisk!";
+	cout << "ERROR: Routines couldn't be saved to harddisk! The file couldn't be opened/written to!" << endl;
 	return false;
 	// Save to harddrive
 }
