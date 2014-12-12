@@ -57,6 +57,14 @@ void sendKommando(unsigned char unitCode, unsigned char * command){
 		}
 	}
 	
+	// Vent 6 zero-crosses før sending af næste kommando kan foregå
+	for (i = 0; i < 6; i++) {
+		while (interrupt == '0') {
+			_delay_us(1);
+		}
+		interrupt = '0';
+	}
+	
 	toggleLED(ledPort, 7);
 }
 
