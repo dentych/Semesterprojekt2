@@ -10,9 +10,10 @@ void receiveBitSequence(unsigned char * outputReceivedBits) {
 	unsigned char correctlyRead = 0;
 	// ** ** ** ** ** ** ** ** ** ** ** ** ** //
 	
+	unsigned char i;
+	
 	while (correctlyRead == 0) {
 		// Wait until interrupt to read data
-		unsigned char i;
 		// For loopet til aflæsning af startbit sekvensen (1110).
 		for (i = 0; i < 4; i++) {
 			waitForInterrupt();
@@ -46,6 +47,10 @@ void receiveBitSequence(unsigned char * outputReceivedBits) {
 		//}
 		
 		correctlyRead = 1;
+	}
+	
+	for (i = 0; i < 6; i++) {
+		waitForInterrupt();
 	}
 	
 	toggleLED(ledPort, 0);
